@@ -4,6 +4,7 @@ Autor: Jordan Godoy
 
 #include "struct.h"
 
+/*
 //Importacion de librerias
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,14 +12,14 @@ Autor: Jordan Godoy
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-
+*/
 //Funcion principal
 int main(int argc, char** argv){
 
     int c;
     struct datos *dato = (struct datos*)calloc(1, sizeof(struct datos));
 
-    if(argc > 13){
+    if(argc > 14){
         printf("\nLa cantidad de parametros de entrada ingresados excede la cantidad solicitada.\n");
         return 0;
     }
@@ -41,25 +42,24 @@ int main(int argc, char** argv){
                     break;
                 case 'M':
                     dato->filasImagen = atoi(optarg);
-                    /*
-                    if(){
-
-                    }*/
+                    if(dato->filasImagen <= 0){
+                        printf("\nLa cantidad de filas de la imagen debe ser mayor a 0.\n");
+                        exit(0);
+                    }
                     break;
                 case 'N':
                     dato->columnasImagen = atoi(optarg);
-                    /*
-                    if(){
-
-                    }*/
+                    if(dato->columnasImagen <= 0){
+                        printf("\nLa cantidad de columnas de la imagen debe ser mayor a 0.\n");
+                        exit(0);
+                    }
                     break;
                 case 'r':
                     dato->factor = atoi(optarg);
-                    /*
-                    if(){
-
+                    if(dato->factor <= 0){
+                        printf("\nEl factor debe ser mayor a 0.\n");
+                        exit(0);
                     }
-                    */
                     break;
                 case 'b':
                     dato->bandera = 1;
@@ -69,7 +69,7 @@ int main(int argc, char** argv){
                         fprintf(stderr, "La opcion -%c requiere un argumento.\n", optopt);
                     }
                     else if(isprint (optopt)){
-                        fprintf(stderr, "La opcion '-%c' es desconocida.\n", optopt);
+                        fprintf(stderr, "La opcion '-%c' requiere un argumento.\n", optopt);
                     }
                     else{
                         fprintf(stderr, "Opcion con caracter desconocido '\\x%x'.\n", optopt);
