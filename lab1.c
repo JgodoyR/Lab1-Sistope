@@ -18,6 +18,7 @@ int main(int argc, char** argv){
 
     int c;
     struct datos *dato = (struct datos*)calloc(1, sizeof(struct datos));
+    //struct datos *dato = (struct*)malloc(1 * sizeof(struct))
 
     if(argc > 14){
         printf("\nLa cantidad de parametros de entrada ingresados excede la cantidad solicitada.\n");
