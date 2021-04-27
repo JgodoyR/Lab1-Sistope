@@ -4,21 +4,55 @@ Autor: Jordan Godoy
 
 #include "struct.h"
 
+float **matrizImagen;
+
 /*
-//Importacion de librerias
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <unistd.h>
-#include <math.h>
+Entradas: 
+Funcionamiento:
+Salida:
 */
+//int leerImagen(char* entrada, int filas, int columnas){
+int leerImagen(char* entrada){
+    FILE* archivo;
+    archivo = fopen(entrada, "rb");
+
+    if(archivo != NULL){
+        printf("\nLEYENDOOOOOOOOO\n");
+        /*printf("%s %d %d\n", entrada, filas, columnas);
+        for(int i = 0; i < filas; i++){
+            fread(matrizImagen[i], sizeof(int), columnas, archivo);
+        }*/
+        return 1;
+    }
+    else{
+        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
+        return 0;
+    }
+
+    fclose(archivo);
+}
+
+/*
+Entradas: 
+Funcionamiento:
+Salida:
+*/
+/*
+float** crearMatriz(int filas, int columnas){
+
+    matriz = (float**)malloc(filas*sizeof(float));
+    
+
+}
+*/
+
+
 //Funcion principal
 int main(int argc, char** argv){
 
     int c;
     struct datos *dato = (struct datos*)calloc(1, sizeof(struct datos));
-    //struct datos *dato = (struct*)malloc(1 * sizeof(struct))
+    //struct datos *dato = (struct* dato) malloc(sizeof(struct*) * 1);
 
     if(argc > 14){
         printf("\nLa cantidad de parametros de entrada ingresados excede la cantidad solicitada.\n");
@@ -83,6 +117,9 @@ int main(int argc, char** argv){
     }
 
     printf("\nI = %s\nZ = %s\nS = %s\nM = %i\nN = %i\nr = %i\nb = %i\n", dato->imagenEntrada, dato->imagenZoom, dato->imagenSuavizada, dato->filasImagen, dato->columnasImagen, dato->factor, dato->bandera);
+
+    //leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
+    leerImagen(dato->imagenEntrada);
 
     return 0;
 
