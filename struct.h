@@ -8,6 +8,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 //Estructura datos de entrada
 struct datos{

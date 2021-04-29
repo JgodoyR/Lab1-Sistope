@@ -4,33 +4,79 @@ Autor: Jordan Godoy
 
 #include "struct.h"
 
-float **matrizImagen;
+float** matrizImagen;
 
 /*
 Entradas: 
 Funcionamiento:
 Salida:
 */
+int validarArchivoEntrada(char* entrada){
+    
+    int archivo = open(entrada, O_RDONLY);
+    if(archivo == -1){
+        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
+        exit(-1);
+    }
+    else{
+        return 1;
+    }
+}
+
 //int leerImagen(char* entrada, int filas, int columnas){
-int leerImagen(char* entrada){
-    FILE* archivo;
+void leerImagen(char* entrada, int filas, int columnas){
+
+    if(validarArchivoEntrada(entrada) == 1){
+
+        matrizImagen = (float **)malloc(filas * sizeof(float*));
+        for(int i = 0; i < filas; i++){
+            matrizImagen[i] = (float *)malloc(columnas * sizeof(float));
+        }
+
+        FILE* archivo = fopen(entrada, "rb");
+        //int archivo = open(entrada, O_RDONLY);
+
+        for(int i = 0; i < filas; i++){
+            //for(int j = 0; j < columnas; j++){
+                //printf("\nPENE\n");
+                //read(archivo, matrizImagen[i], columnas);
+                fread(matrizImagen[i], sizeof(float), columnas, archivo);
+                //matrizImagen[i][j] = read(archivo, matrizImagen[i], columnas);
+                //matrizImagen[i] = read(archivo, matrizImagen, columnas);
+            //}
+        }
+
+        int cont = 0;
+        for(int i = 0; i < filas; i++){
+            for(int j = 0; j < columnas; j++){
+                printf("%.2f ", matrizImagen[i][j]);
+                cont += 1;
+            }
+        }
+        printf("\n%d\n", cont);
+
+        //fclose(archivo);
+    }
+
+}
+    /*FILE* archivo;
     archivo = fopen(entrada, "rb");
 
     if(archivo != NULL){
         printf("\nLEYENDOOOOOOOOO\n");
-        /*printf("%s %d %d\n", entrada, filas, columnas);
+        printf("%s %d %d\n", entrada, filas, columnas);
         for(int i = 0; i < filas; i++){
             fread(matrizImagen[i], sizeof(int), columnas, archivo);
-        }*/
+        }
         return 1;
     }
     else{
         printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
-        return 0;
+        exit(-1);
     }
 
-    fclose(archivo);
-}
+    fclose(archivo);*/
+
 
 /*
 Entradas: 
@@ -118,8 +164,8 @@ int main(int argc, char** argv){
 
     printf("\nI = %s\nZ = %s\nS = %s\nM = %i\nN = %i\nr = %i\nb = %i\n", dato->imagenEntrada, dato->imagenZoom, dato->imagenSuavizada, dato->filasImagen, dato->columnasImagen, dato->factor, dato->bandera);
 
-    //leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
-    leerImagen(dato->imagenEntrada);
+    leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
+    //leerImagen(dato->imagenEntrada);
 
     return 0;
 

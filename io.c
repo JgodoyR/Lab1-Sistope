@@ -5,6 +5,28 @@ Entradas:
 Funcionamiento:
 Salida:
 */
+//int leerImagen(char* entrada, int filas, int columnas){
+int leerImagen(char* entrada){
+    FILE* archivo;
+    archivo = fopen(entrada, "rb");
+
+    if(archivo != NULL){
+        printf("\nLEYENDOOOOOOOOO\n");
+        return 1;
+    }
+    else{
+        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
+        return 0;
+    }
+
+    fclose(archivo);
+}
+
+/*
+Entradas: 
+Funcionamiento:
+Salida:
+*/
 
 int verificarEntrada(char* imagenEntrada){
     FILE* archivo;
