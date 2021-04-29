@@ -77,6 +77,18 @@ void leerImagen(char* entrada, int filas, int columnas){
 
     fclose(archivo);*/
 
+void escribirResultados(char* nombre, int filas, int columnas){
+
+    FILE* archivo = fopen(nombre, "wb");
+
+    for(int i = 0; i < filas; i++){
+        fwrite(matrizImagen[i], sizeof(float), columnas, archivo);
+    }
+    
+    fclose(archivo);
+
+}
+
 
 /*
 Entradas: 
@@ -166,6 +178,8 @@ int main(int argc, char** argv){
 
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
     //leerImagen(dato->imagenEntrada);
+
+    escribirResultados(dato->imagenZoom, dato->filasImagen, dato->columnasImagen);
 
     return 0;
 
