@@ -85,7 +85,13 @@ int main(int argc, char** argv){
 
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
 
-    zoomInImagen(matrizImagen, matrizZoomIn, dato->filasImagen, dato->columnasImagen, dato->factor);
+    zoomInImagen(matrizImagen, dato->filasImagen, dato->columnasImagen, dato->factor);
+
+    //imprimirMatriz(matrizZoomIn, dz->filasZoom, dz->columnasZoom);
+
+    //imprimirMatriz(matrizImagen, dato->filasImagen, dato->columnasImagen);
+
+    liberarMemoria(matrizImagen, dato->filasImagen);
 
     escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom, dato->bandera);//dz->filasZoom, dz->columnasZoom);
 

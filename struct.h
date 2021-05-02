@@ -14,7 +14,7 @@
 //Variables globales
 float** matrizImagen;
 float** matrizZoomIn;
-float** matrizSuavizado;
+//float** matrizSuavizado;
 
 //Estructura datos de entrada
 struct datos{

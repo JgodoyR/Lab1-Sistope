@@ -79,27 +79,20 @@ Salida: No tiene
 */
 void escribirResultados(char* nombre, float** matrizConZoom, int filasZ, int columnasZ, int band){
 
-/*
-    printf("\n%s", nombre);
-    printf("\n%d", filasZ);
-    printf("\n%d", columnasZ);
-*/
     if(bandera(band)){
 
-        printf("\nLas filas con zoom son: %i", filasZ);
+        printf("\nLas filas con zoom son: %d", filasZ);
 
-        printf("\nLas columnas con zoom son: %i\n", columnasZ);
+        printf("\nLas columnas con zoom son: %d\n", columnasZ);
 
     }
 
-    FILE* fp = fopen(nombre, "wb");
+    FILE* archivo = fopen(nombre, "wb");
 
-    for(int i = 0; i < filasZ; i++){
-        printf("\nAAAAa\n");
-        fwrite(&matrizConZoom[i], sizeof(float), columnasZ, fp);
-        printf("\nBBBBB\n");
+    for(int z = 0; z < filasZ; z++){
+        fwrite(matrizConZoom[z], sizeof(float), columnasZ, archivo);
     }
 
-    fclose(fp);
+    fclose(archivo);
 
 }

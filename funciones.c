@@ -8,11 +8,11 @@ Entradas: Matriz de la imagen x Matriz vacia para almacenar la nueva matriz x Fi
 Funcionamiento:
 Salida: No tiene
 */
-void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas, int factorReplicacion){
+void zoomInImagen(float** matriz, int filas, int columnas, int factorReplicacion){
 
-    matrizConZoom = (float **)malloc((filas*factorReplicacion) * sizeof(float*));
+    matrizZoomIn = (float **)malloc((filas*factorReplicacion) * sizeof(float*));
     for(int i = 0; i < filas*factorReplicacion; i++){
-        matrizConZoom[i] = (float *)malloc((columnas*factorReplicacion) * sizeof(float));
+        matrizZoomIn[i] = (float *)malloc((columnas*factorReplicacion) * sizeof(float));
     }
 
     int aux1 = 0; 
@@ -21,24 +21,34 @@ void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas
         for(int j = 0; j < columnas; j++){
             for(int k = aux1; k < (aux1+factorReplicacion); k++){
                 for(int l = aux2; l < (aux2+factorReplicacion); l++){
-                    matrizConZoom[k][l] = matriz[i][j];
+                    matrizZoomIn[k][l] = matriz[i][j];
                 }
             }
             aux2 += factorReplicacion;
         }
         aux1 += factorReplicacion;
     }
-
-    //liberarMemoria(matriz, filas);
 /*
     for(int x = 0; x < filas*factorReplicacion; x++){
         for(int y = 0; y < columnas*factorReplicacion; y++){
-            printf("%.2f , ", matrizConZoom[x][y]);
+            printf("%.2f , ", matrizZoomIn[x][y]);
         }
     }
     printf("\n");*/
 
+    //return matrizConZoom;
 }
+
+/*
+void imprimirMatriz(float** matrizConZoom, int filasZ, int columnasZ){
+    for(int x = 0; x < filasZ; x++){
+        for(int y = 0; y < columnasZ; y++){
+            printf("%.2f , ", matrizConZoom[x][y]);
+        }
+    }
+    printf("\n");
+}*/
+
 
 /*
 Entradas: Matriz x Filas de la imagen x Columnas de la imagen
