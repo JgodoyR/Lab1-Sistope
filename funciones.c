@@ -15,38 +15,51 @@ void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas
         matrizConZoom[i] = (float *)malloc((columnas*factorReplicacion) * sizeof(float));
     }
 
-    int a = 0;
-    int b = 0;
-
+    int aux1 = 0; 
     for(int i = 0; i < filas; i++){
-        //printf("\n1");
+        int aux2 = 0;
         for(int j = 0; j < columnas; j++){
-            //printf("\n2");
-            for(int k = a; k < a+factorReplicacion; k++){
-                //printf("\n3");
-                for(int l = b; l < b+factorReplicacion; l++){
-                    //printf("\n4");
+            for(int k = aux1; k < (aux1+factorReplicacion); k++){
+                for(int l = aux2; l < (aux2+factorReplicacion); l++){
                     matrizConZoom[k][l] = matriz[i][j];
                 }
             }
-            b = b + factorReplicacion;
+            aux2 += factorReplicacion;
         }
-        a = a + factorReplicacion;
+        aux1 += factorReplicacion;
     }
+/*
+    for(int x = 0; x < filas*factorReplicacion; x++){
+        for(int y = 0; y < columnas*factorReplicacion; y++){
+            printf("%.2f , ", matrizConZoom[x][y]);
+        }
+    }
+    printf("\n");*/
 
 }
+
+/*
+Entradas: Matriz x Filas de la imagen x Columnas de la imagen
+Funcionamiento: Funcion que suaviza la imagen
+Salida: No tiene
+*/
+/*
+void suavizarImagen(float** matriz, int filas, int columnas){
+
+}*/
+
 
 /*
 Entradas: Matriz x Filas de la imagen x Columnas de la imagen
 Funcionamiento: Funcion que libera memoria
 Salida: No tiene
 */
-void liberarMemoria(float **matriz, int filas, int columnas){
+void liberarMemoria(float **matriz, int filas){
 
     for(int i = 0; i < filas; i++){
-        for(int j = 0; j < columnas; j++){
             free(matriz[i]);
-        }
     }
+
+    free(matriz);
 
 }

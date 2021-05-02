@@ -12,8 +12,8 @@ Salida: Entero (0 o 1)
 */
 int validarArchivoEntrada(char* entrada){  
     //char* extension;
-    int archivo = open(entrada, O_RDONLY);
-    if(archivo == -1){
+    int nombreImagen = open(entrada, O_RDONLY);
+    if(nombreImagen == -1){
         printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
         exit(-1);
     }
@@ -79,12 +79,18 @@ Salida: No tiene
 */
 void escribirResultados(char* nombre, float** matriz, int filas, int columnas){
 
-    FILE* archivo = fopen(nombre, "wb");
+    printf("\n%s", nombre);
+    printf("\n%d", filas);
+    printf("\n%d", columnas);
+
+    FILE *archivoZ = fopen(nombre, "wb");
+
+    printf("\nHola");
 
     for(int i = 0; i < filas; i++){
-        fwrite(matriz[i], sizeof(float), columnas, archivo);
+        fwrite(matriz[i], sizeof(float), columnas, archivoZ);
     }
 
-    fclose(archivo);
+    fclose(archivoZ);
 
 }
