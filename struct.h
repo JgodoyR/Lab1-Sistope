@@ -15,7 +15,6 @@
 float** matrizImagen;
 float** matrizZoomIn;
 float** matrizSuavizado;
-int flag = 0;
 
 //Estructura datos de entrada
 struct datos{

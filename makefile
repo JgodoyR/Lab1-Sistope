@@ -5,12 +5,17 @@ FLAGS = -g -Wall
 all: lab1
 	echo "./lab1 -I imagen1.raw -Z imagen1Z.raw -S imagen1S.raw -M 512 -N 512 -r 2 -b"
 
-lab1: lab1.o 
-	gcc lab1.o -o lab1 ${FLAGS}
+lab1: lab1.o io.o funciones.o
+	gcc lab1.o io.o funciones.o -o lab1 ${FLAGS}
 
-lab1.o: lab1.c struct.h
+lab1.o: lab1.c struct.h io.h funciones.h
 	gcc lab1.c -c ${FLAGS}
 
+io.o: io.c struct.h io.h funciones.h
+	gcc io.c -c ${FLAGS}
+
+funciones.o: funciones.c struct.h io.h funciones.h
+	gcc funciones.c -c ${FLAGS}
 
 clean:
 	rm lab1 *.o -f

@@ -1,88 +1,56 @@
 #include "struct.h"
+#include "funciones.h"
+#include "io.h"
+
+//Variable global
+int flag = 0;
 
 /*
-Entradas: 
-Funcionamiento:
-Salida:
-*/
-//int leerImagen(char* entrada, int filas, int columnas){
-int leerImagen(char* entrada){
-    FILE* archivo;
-    archivo = fopen(entrada, "rb");
-
-    if(archivo != NULL){
-        printf("\nLEYENDOOOOOOOOO\n");
-        return 1;
-    }
-    else{
-        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
-        return 0;
-    }
-
-    fclose(archivo);
-}
-
-/*
-Entradas: 
-Funcionamiento:
-Salida:
-*/
-
-int verificarEntrada(char* imagenEntrada){
-    FILE* archivo;
-    char* extension;
-    archivo = fopen(imagenEntrada, "r");
-    if(archivo != NULL){
-        extension = strrchr(imagenEntrada, '.');
-        if(strcmp(extension, ".raw") == 0){
-            return 1;
-        }
-        else{
-            printf("\nEl archivo no posee la extension adecuada.\n");
-            return 0;
-        }
-    }
-    else{
-        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
-        return 0;
-    }
-
-    fclose(archivo);
-
-}
-
-/*
-Entradas: 
-Funcionamiento:
-Salida:
+Entradas: Nombre de la imagen
+Funcionamiento: Funcion que valida que exista la imagen en el directorio dado
+Salida: Entero (0 o 1)
 */
 int validarArchivoEntrada(char* entrada){  
+    //char* extension;
     int archivo = open(entrada, O_RDONLY);
     if(archivo == -1){
         printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
         exit(-1);
     }
-    else{
-
-        //probando
-
-        extension = strrchr(imagenEntrada, '.');
+    else{/*
+        extension = strrchr(entrada, '.');
         if(strcmp(extension, ".raw") == 0){
             return 1;
         }
         else{
             printf("\nEl archivo no posee la extension adecuada.\n");
             return 0;
-        }
-
+        }*/
         return 1;
     }
 }
 
 /*
-Entradas: 
-Funcionamiento:
-Salida:
+Entradas: Bandera
+Funcionamiento: Funcion que comprueba el valor de la bandera, y le asigna dicho valor a una variable global 
+                llamada flag.
+Salida: Entero (0 o 1)
+*/
+int bandera(int band){
+
+    if(band){
+        flag = 1;
+    }
+
+    return flag;
+
+}
+
+/*
+Entradas: Nombre del archivo de entrada x Filas de la imagen x Columnas de la imagen
+Funcionamiento: Funcion que lee una imagen en formato ".raw", le asigna memoria a una matriz  y
+                almacena los datos de la imagen en dicha matriz.
+Salida: No tiene
 */
 void leerImagen(char* entrada, int filas, int columnas){
 
@@ -96,7 +64,7 @@ void leerImagen(char* entrada, int filas, int columnas){
         FILE* archivo = fopen(entrada, "rb");
 
         for(int i = 0; i < filas; i++){
-                fread(matrizImagen[i], sizeof(float), columnas, archivo);
+            fread(matrizImagen[i], sizeof(float), columnas, archivo);
         }
 
         fclose(archivo);
@@ -105,11 +73,11 @@ void leerImagen(char* entrada, int filas, int columnas){
 }
     
 /*
-Entradas: 
-Funcionamiento:
-Salida:
+Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen x Columnas de la imagen
+Funcionamiento: Funcion que escribe un archivo en formato ".raw" con el contenido de una matriz
+Salida: No tiene
 */
-void escribirResultados(char* nombre, float** matrizImagen, int filas, int columnas){
+void escribirResultados(char* nombre, float** matriz, int filas, int columnas){
 
     FILE* archivo = fopen(nombre, "wb");
 

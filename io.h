@@ -1,8 +1,12 @@
 #ifndef IO_H
 #define IO_H
 
-void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas, int factorReplicacion);
+int validarArchivoEntrada(char* entrada);  
 
-void liberarMemoria(float **matriz, int filas, int columnas);
+int bandera(int band);
+
+void leerImagen(char* entrada, int filas, int columnas);
+
+void escribirResultados(char* nombre, float** matriz, int filas, int columnas);
 
 #endif

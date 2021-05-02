@@ -3,101 +3,8 @@ Autor: Jordan Godoy
 */
 
 #include "struct.h"
-
-/*
-Entradas: Nombre de la imagen
-Funcionamiento: Funcion que valida que exista la imagen en el directorio dado
-Salida: Entero (0 o 1)
-*/
-int validarArchivoEntrada(char* entrada){  
-    int archivo = open(entrada, O_RDONLY);
-    if(archivo == -1){
-        printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
-        exit(-1);
-    }
-    else{
-        return 1;
-    }
-}
-
-/*
-Entradas: Nombre del archivo de entrada x Filas de la imagen x Columnas de la imagen
-Funcionamiento: Funcion que lee una imagen en formato ".raw", le asigna memoria a una matriz  y
-                almacena los datos de la imagen en dicha matriz.
-Salida: No tiene
-*/
-void leerImagen(char* entrada, int filas, int columnas){
-
-    if(validarArchivoEntrada(entrada) == 1){
-
-        matrizImagen = (float **)malloc(filas * sizeof(float*));
-        for(int i = 0; i < filas; i++){
-            matrizImagen[i] = (float *)malloc(columnas * sizeof(float));
-        }
-
-        FILE* archivo = fopen(entrada, "rb");
-        //int archivo = open(entrada, O_RDONLY);
-
-        for(int i = 0; i < filas; i++){
-            //for(int j = 0; j < columnas; j++){
-                //read(archivo, matrizImagen[i], columnas);
-                fread(matrizImagen[i], sizeof(float), columnas, archivo);
-                //matrizImagen[i][j] = read(archivo, matrizImagen[i], columnas);
-                //matrizImagen[i] = read(archivo, matrizImagen, columnas);
-            //}
-        }
-/*
-        int cont = 0;
-        for(int i = 0; i < filas; i++){
-            for(int j = 0; j < columnas; j++){
-                printf("%.2f ", matrizImagen[i][j]);
-                cont += 1;
-            }
-        }
-        printf("\n%d\n", cont);
-*/
-        fclose(archivo);
-    }
-
-}
-    
-/*
-Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen x Columnas de la imagen
-Funcionamiento: Funcion que escribe un archivo en formato ".raw" con el contenido de una matriz
-Salida: No tiene
-*/
-void escribirResultados(char* nombre, float** matriz, int filas, int columnas){
-
-    FILE* archivo = fopen(nombre, "wb");
-/*
-    for(int i = 0; i < filas; i++){
-        fwrite(matrizImagen[i], sizeof(float), columnas, archivo);
-    }
-*/
-
-    for(int i = 0; i < filas; i++){
-        fwrite(matriz[i], sizeof(float), columnas, archivo);
-    }
-
-    fclose(archivo);
-
-}
-
-/*
-Entradas: Bandera
-Funcionamiento: Funcion que comprueba el valor de la bandera, y le asigna dicho valor a una variable global 
-                llamada flag.
-Salida: Entero (0 o 1)
-*/
-int bandera(int band){
-
-    if(band){
-        flag = 1;
-    }
-
-    return flag;
-
-}
+#include "funciones.h"
+#include "io.h"
 
 //Funcion principal
 int main(int argc, char** argv){
@@ -172,6 +79,10 @@ int main(int argc, char** argv){
     printf("\nI = %s\nZ = %s\nS = %s\nM = %i\nN = %i\nr = %i\nb = %i\n", dato->imagenEntrada, dato->imagenZoom, dato->imagenSuavizada, dato->filasImagen, dato->columnasImagen, dato->factor, dato->bandera);
 
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
+
+    zoomInImagen(matrizImagen, matrizZoomIn, dato->filasImagen, dato->columnasImagen, dato->factor);
+
+    escribirResultados(dato->imagenZoom, matrizZoomIn, dato->filasImagen, dato->columnasImagen);
 
     //escribirResultados(dato->imagenZoom, matrizImagen, dato->filasImagen, dato->columnasImagen);
 

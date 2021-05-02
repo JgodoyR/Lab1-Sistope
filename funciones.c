@@ -10,9 +10,28 @@ Salida: No tiene
 */
 void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas, int factorReplicacion){
 
-    matrizZoomIn = (float **)malloc(filas * sizeof(float*));
+    matrizConZoom = (float **)malloc((filas*factorReplicacion) * sizeof(float*));
+    for(int i = 0; i < filas*factorReplicacion; i++){
+        matrizConZoom[i] = (float *)malloc((columnas*factorReplicacion) * sizeof(float));
+    }
+
+    int a = 0;
+    int b = 0;
+
     for(int i = 0; i < filas; i++){
-        matrizZoomIn[i] = (float *)malloc(columnas * sizeof(float));
+        //printf("\n1");
+        for(int j = 0; j < columnas; j++){
+            //printf("\n2");
+            for(int k = a; k < a+factorReplicacion; k++){
+                //printf("\n3");
+                for(int l = b; l < b+factorReplicacion; l++){
+                    //printf("\n4");
+                    matrizConZoom[k][l] = matriz[i][j];
+                }
+            }
+            b = b + factorReplicacion;
+        }
+        a = a + factorReplicacion;
     }
 
 }
