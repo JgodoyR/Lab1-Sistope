@@ -77,20 +77,29 @@ Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen 
 Funcionamiento: Funcion que escribe un archivo en formato ".raw" con el contenido de una matriz
 Salida: No tiene
 */
-void escribirResultados(char* nombre, float** matriz, int filas, int columnas){
+void escribirResultados(char* nombre, float** matrizConZoom, int filasZ, int columnasZ, int band){
 
+/*
     printf("\n%s", nombre);
-    printf("\n%d", filas);
-    printf("\n%d", columnas);
+    printf("\n%d", filasZ);
+    printf("\n%d", columnasZ);
+*/
+    if(bandera(band)){
 
-    FILE *archivoZ = fopen(nombre, "wb");
+        printf("\nLas filas con zoom son: %i", filasZ);
 
-    printf("\nHola");
+        printf("\nLas columnas con zoom son: %i\n", columnasZ);
 
-    for(int i = 0; i < filas; i++){
-        fwrite(matriz[i], sizeof(float), columnas, archivoZ);
     }
 
-    fclose(archivoZ);
+    FILE* fp = fopen(nombre, "wb");
+
+    for(int i = 0; i < filasZ; i++){
+        printf("\nAAAAa\n");
+        fwrite(&matrizConZoom[i], sizeof(float), columnasZ, fp);
+        printf("\nBBBBB\n");
+    }
+
+    fclose(fp);
 
 }

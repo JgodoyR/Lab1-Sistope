@@ -7,6 +7,6 @@ int bandera(int band);
 
 void leerImagen(char* entrada, int filas, int columnas);
 
-void escribirResultados(char* nombre, float** matriz, int filas, int columnas);
+void escribirResultados(char* nombre, float** matrizConZoom, int filasZ, int columnasZ, int band);
 
 #endif

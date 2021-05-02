@@ -77,23 +77,17 @@ int main(int argc, char** argv){
         }
     }
 
-    //FILE* archivoZ = fopen(dato->imagenZoom, "wb");
-
     dz->filasZoom = dato->filasImagen * dato->factor;
 
     dz->columnasZoom = dato->columnasImagen * dato->factor;
 
     printf("\nI = %s\nZ = %s\nS = %s\nM = %i\nN = %i\nr = %i\nb = %i\n", dato->imagenEntrada, dato->imagenZoom, dato->imagenSuavizada, dato->filasImagen, dato->columnasImagen, dato->factor, dato->bandera);
 
-    printf("\nLas filas con zoom son: %i", dz->filasZoom);
-
-    printf("\nLas columnas con zoom son: %i\n", dz->columnasZoom);
-
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
 
     zoomInImagen(matrizImagen, matrizZoomIn, dato->filasImagen, dato->columnasImagen, dato->factor);
 
-    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom);
+    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom, dato->bandera);//dz->filasZoom, dz->columnasZoom);
 
     //escribirResultados(dato->imagenZoom, matrizImagen, dato->filasImagen, dato->columnasImagen);
 

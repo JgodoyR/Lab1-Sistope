@@ -28,6 +28,8 @@ void zoomInImagen(float** matriz, float** matrizConZoom, int filas, int columnas
         }
         aux1 += factorReplicacion;
     }
+
+    //liberarMemoria(matriz, filas);
 /*
     for(int x = 0; x < filas*factorReplicacion; x++){
         for(int y = 0; y < columnas*factorReplicacion; y++){
@@ -44,7 +46,7 @@ Funcionamiento: Funcion que suaviza la imagen
 Salida: No tiene
 */
 /*
-void suavizarImagen(float** matriz, int filas, int columnas){
+void suavizarImagen(float** matrizConZoom, int filasZ, int columnasZ){
 
 }*/
 
