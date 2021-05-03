@@ -37,32 +37,86 @@ void zoomInImagen(float** matriz, int filas, int columnas, int factorReplicacion
         aux1 += factorReplicacion;
     }
 
+    liberarMemoriaMatriz(matrizImagen, filas);
+
+    //suavizarImagen(matrizZoomIn, filas*factorReplicacion, columnas*factorReplicacion);
+
 }
 
 /*
-void imprimirMatriz(float** matrizConZoom, int filasZ, int columnasZ){
-    for(int x = 0; x < filasZ; x++){
-        for(int y = 0; y < columnasZ; y++){
-            printf("%.2f , ", matrizConZoom[x][y]);
-        }
-    }
-    printf("\n");
-}*/
-
-/*
 Entradas: Matriz x Filas de la imagen con zoom x Columnas de la imagen con zoom
-Funcionamiento: Funcion que suaviza la imagen
+Funcionamiento: Funcion que suaviza la imagen, cambiando el valor de un pixel por la media de su vecindario
 Salida: No tiene
 */
 void suavizarImagen(float** matrizConZoom, int filasZ, int columnasZ){
 
     //Se le asigna memoria a la matriz de suavizado
-    matrizSuavizado = (float **)malloc(filasZ * sizeof(float*));
+    matrizSuavizada = (float **)malloc(filasZ * sizeof(float*));
     for(int i = 0; i < filasZ; i++){
-        matrizSuavizado[i] = (float *)malloc(columnasZ * sizeof(float));
+        matrizSuavizada[i] = (float *)malloc(columnasZ * sizeof(float));
     }
 
+    //Se recorre la matriz zoom
+    for(int i = 0; i < filasZ; i++){
+        for(int j = 0; j < columnasZ; j++){
 
+            //Casos bases (esquinas de la matriz)
+            if((i == 0 && j == 0) || (i == filasZ-1 && j == 0) || (i == 0 && j == columnasZ-1) || (i == filasZ-1 && j == columnasZ-1)){
+
+                //Esquinas de la matriz
+                //Se suman los 3 elementos alrededor del pixel y se calcula su media, la cual equivaldra al pixel de la matriz suavizada
+
+                //Esquina superior izquierda
+                if(i == 0 && j == 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i+1][j+1] + matrizConZoom[i][j+1] + matrizConZoom[i+1][j])/3;
+                }
+                //Esquina inferior izquierda
+                else if(i == filasZ-1 && j == 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i-1][j] + matrizConZoom[i-1][j+1] + matrizConZoom[i][j+1])/3;
+                }
+                //Esquina superior derecha
+                else if(i == 0 && j == columnasZ-1){
+                    matrizSuavizada[i][j] = (matrizConZoom[i+1][j-1] + matrizConZoom[i+1][j] + matrizConZoom[i][j-1])/3;
+                }
+                //Esquina inferior derecha
+                else{
+                    matrizSuavizada[i][j] = (matrizConZoom[i-1][j-1] + matrizConZoom[i-1][j] + matrizConZoom[i][j-1])/3;
+                }
+            }
+            //Caso recursivo
+            else{
+
+                //bordes de la matriz
+                //Se suman los 5 elementos alrededor del pixel y se calcula su media, la cual equivaldra al pixel de la matriz suavizada
+
+                //Borde superior
+                if(i == 0 && j != columnasZ-1 && j != 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i][j-1] + matrizConZoom[i+1][j-1] + matrizConZoom[i+1][j] + matrizConZoom[i+1][j+1] + matrizConZoom[i][j+1])/5;
+                }
+                //Borde derecho
+                else if(j == columnasZ-1 && i != filasZ-1 && i != 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i-1][j] + matrizConZoom[i-1][j-1] + matrizConZoom[i][j-1] + matrizConZoom[i+1][j-1] + matrizConZoom[i+1][j])/5;
+                }
+                //Borde izquierdo
+                else if(j == 0 && i != filasZ-1 && i != 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i-1][j] + matrizConZoom[i-1][j+1] + matrizConZoom[i][j+1] + matrizConZoom[i+1][j+1] + matrizConZoom[i+1][j])/5;
+                }
+                //Borde inferior
+                else if(i == filasZ-1 && j != columnasZ-1 && j != 0){
+                    matrizSuavizada[i][j] = (matrizConZoom[i][j-1] + matrizConZoom[i-1][j-1] + matrizConZoom[i-1][j] + matrizConZoom[i-1][j+1] + matrizConZoom[i][j+1])/5;
+                }
+
+                //Centro de la matriz
+                else{
+                    //Se suman los 8 elementos alrededor del pixel y se calcula su media, la cual equivaldra al pixel de la matriz suavizada
+                    matrizSuavizada[i][j] = (matrizConZoom[i-1][j-1] + matrizConZoom[i][j-1] + matrizConZoom[i+1][j-1] + matrizConZoom[i+1][j] + matrizConZoom[i+1][j+1] + matrizConZoom[i][j+1] + matrizConZoom[i-1][j+1] + matrizConZoom[i-1][j])/8;
+                }
+            }
+
+        }
+    }
+
+    liberarMemoriaMatriz(matrizZoomIn, filasZ);
 
 }
 
@@ -72,7 +126,7 @@ Funcionamiento: Funcion que libera memoria mediante la funcion free, se liberara
                 para finalmente liberar la memoria de la matriz entera.
 Salida: No tiene
 */
-void liberarMemoria(float **matriz, int filas){
+void liberarMemoriaMatriz(float **matriz, int filas){
 
     //Se recorre toda la matriz liberando memoria de cada indice
     for(int i = 0; i < filas; i++){
@@ -81,5 +135,18 @@ void liberarMemoria(float **matriz, int filas){
 
     //Se libera la memoria de la matriz
     free(matriz);
+
+}
+
+/*
+Entradas: Estructuras
+Funcionamiento: Funcion que libera memoria mediante la funcion free, se liberara el espacio de memoria de cada elemento de la estructura
+Salida: No tiene
+*/
+void liberarMemoria(struct datos *dato, struct datosZoom *dz){
+
+    //Se libera la memoria de las estructuras
+    free(dato);
+    free(dz);
 
 }

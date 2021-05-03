@@ -86,17 +86,26 @@ int main(int argc, char** argv){
     //Se lee la imagen de entrada
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
 
+    //Se verifica si se muestran datos en pantalla
+    flag(dato->bandera, dz->filasZoom, dz->columnasZoom);
+
     //Se hace el zoom a la imagen
     zoomInImagen(matrizImagen, dato->filasImagen, dato->columnasImagen, dato->factor);
 
-    //Se libera la memoria de la matriz inicial
-    liberarMemoria(matrizImagen, dato->filasImagen);
+    //Se escriben la imagen con zoom
+    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom);
 
     //Se realiza el suavizado de la imagen
     suavizarImagen(matrizZoomIn, dz->filasZoom, dz->columnasZoom);
 
-    //Se escriben los resultados
-    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom, dato->bandera);
+    //Se escriben la imagen con zoom
+    escribirResultados(dato->imagenSuavizada, matrizSuavizada, dz->filasZoom, dz->columnasZoom);
+
+    //Se libera la memoria de la matriz suavizada
+    liberarMemoriaMatriz(matrizSuavizada, dz->filasZoom);
+
+    //Se libera la memoria las estructuras
+    liberarMemoria(dato, dz);
 
     return 0;
 

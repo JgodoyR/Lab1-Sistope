@@ -2,16 +2,13 @@
 #include "funciones.h"
 #include "io.h"
 
-//Variable global
-int flag = 0;
-
 /*
 Entradas: Nombre de la imagen
 Funcionamiento: Funcion que valida que exista la imagen en el directorio dado
 Salida: Entero (0 o 1)
 */
 int validarArchivoEntrada(char* entrada){  
-    //char* extension;
+    char* extension;
     //Se abre el archivo de entrada
     int nombreImagen = open(entrada, O_RDONLY);
 
@@ -20,7 +17,7 @@ int validarArchivoEntrada(char* entrada){
         printf("\nNo existe el archivo o se encuenta en otra ubicacion.\n");
         exit(-1);
     }
-    else{/*
+    else{
         extension = strrchr(entrada, '.');
         if(strcmp(extension, ".raw") == 0){
             return 1;
@@ -28,25 +25,25 @@ int validarArchivoEntrada(char* entrada){
         else{
             printf("\nEl archivo no posee la extension adecuada.\n");
             return 0;
-        }*/
+        }
         return 1;
     }
 }
 
 /*
-Entradas: Bandera
-Funcionamiento: Funcion que comprueba el valor de la bandera, y le asigna dicho valor a una variable global 
-                llamada flag.
-Salida: Entero (0 o 1)
+Entradas: Bandera x Filas de la imagen con zoom x Columnas de la imagen con zoom
+Funcionamiento: Funcion que comprueba el valor de la bandera, y en caso de ser 1, muestra las dimensiones de la imagen con zoom
+                por pantalla
+Salida: No tiene
 */
-int bandera(int band){
+void flag(int band, int filasZ, int columnasZ){
 
     //Se comprueba que exista la bandera
     if(band){
-        flag = 1;
+        //Si existe la bandera, se imprime por pantalla el valor de las filas y columnas de la imagen con zoom
+        printf("\nLas filas con zoom son: %d", filasZ);
+        printf("\nLas columnas con zoom son: %d\n", columnasZ);
     }
-
-    return flag;
 
 }
 
@@ -84,13 +81,7 @@ Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen 
 Funcionamiento: Funcion que escribe un archivo en formato ".raw" con el contenido de una matriz
 Salida: No tiene
 */
-void escribirResultados(char* nombre, float** matrizConZoom, int filasZ, int columnasZ, int band){
-
-    //Si existe la bandera, se imprime por pantalla el valor de las filas y columnas de la imagen con zoom
-    if(bandera(band)){
-        printf("\nLas filas con zoom son: %d", filasZ);
-        printf("\nLas columnas con zoom son: %d\n", columnasZ);
-    }
+void escribirResultados(char* nombre, float** matrizConZoom, int filasZ, int columnasZ){
 
     FILE* archivo = fopen(nombre, "wb");
 
