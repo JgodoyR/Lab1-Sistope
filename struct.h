@@ -2,19 +2,18 @@
 #define STRUCT_H
 
 //Importacion de librerias
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
-#include <unistd.h>
-//#include <math.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <stdio.h>                      
+#include <stdlib.h>                    
+#include <ctype.h>                      
+#include <string.h>                     
+#include <unistd.h>                     
+#include <sys/stat.h>                   
+#include <fcntl.h>                      
 
 //Variables globales
 float** matrizImagen;
 float** matrizZoomIn;
-//float** matrizSuavizado;
+float** matrizSuavizado;
 
 //Estructura datos de entrada
 struct datos{
@@ -27,6 +26,7 @@ struct datos{
     int bandera;                        //bandera que indica si se entregan resultados por consola (0 o 1)
 };
 
+//Estructura que almacena las dimensiones de la imagen con zoom
 struct datosZoom{
     int filasZoom;                      //Numero de filas de la imagen con el Zoom aplicado
     int columnasZoom;                   //Numero de columnas de la imagen con el Zoom aplicado

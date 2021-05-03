@@ -10,8 +10,9 @@ Autor: Jordan Godoy
 int main(int argc, char** argv){
 
     int c;
+
+    //Se le asigna memoria a las estructuras
     struct datos *dato = (struct datos*)calloc(1, sizeof(struct datos));
-    //struct datos *dato = (struct*)malloc(sizeof(struct) * 1);
     struct datosZoom *dz = (struct datosZoom*)calloc(1, sizeof(struct datosZoom));
 
     if(argc > 14){
@@ -77,25 +78,25 @@ int main(int argc, char** argv){
         }
     }
 
+    //Se calcula las nuevas dimensiones de la imagen con zoom
     dz->filasZoom = dato->filasImagen * dato->factor;
 
     dz->columnasZoom = dato->columnasImagen * dato->factor;
 
-    printf("\nI = %s\nZ = %s\nS = %s\nM = %i\nN = %i\nr = %i\nb = %i\n", dato->imagenEntrada, dato->imagenZoom, dato->imagenSuavizada, dato->filasImagen, dato->columnasImagen, dato->factor, dato->bandera);
-
+    //Se lee la imagen de entrada
     leerImagen(dato->imagenEntrada, dato->filasImagen, dato->columnasImagen);
 
+    //Se hace el zoom a la imagen
     zoomInImagen(matrizImagen, dato->filasImagen, dato->columnasImagen, dato->factor);
 
-    //imprimirMatriz(matrizZoomIn, dz->filasZoom, dz->columnasZoom);
-
-    //imprimirMatriz(matrizImagen, dato->filasImagen, dato->columnasImagen);
-
+    //Se libera la memoria de la matriz inicial
     liberarMemoria(matrizImagen, dato->filasImagen);
 
-    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom, dato->bandera);//dz->filasZoom, dz->columnasZoom);
+    //Se realiza el suavizado de la imagen
+    suavizarImagen(matrizZoomIn, dz->filasZoom, dz->columnasZoom);
 
-    //escribirResultados(dato->imagenZoom, matrizImagen, dato->filasImagen, dato->columnasImagen);
+    //Se escriben los resultados
+    escribirResultados(dato->imagenZoom, matrizZoomIn, dz->filasZoom, dz->columnasZoom, dato->bandera);
 
     return 0;
 
