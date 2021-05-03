@@ -8,7 +8,7 @@ Funcionamiento: Funcion que valida que exista la imagen en el directorio dado
 Salida: Entero (0 o 1)
 */
 int validarArchivoEntrada(char* entrada){  
-    char* extension;
+
     //Se abre el archivo de entrada
     int nombreImagen = open(entrada, O_RDONLY);
 
@@ -18,16 +18,9 @@ int validarArchivoEntrada(char* entrada){
         exit(-1);
     }
     else{
-        extension = strrchr(entrada, '.');
-        if(strcmp(extension, ".raw") == 0){
-            return 1;
-        }
-        else{
-            printf("\nEl archivo no posee la extension adecuada.\n");
-            return 0;
-        }
         return 1;
     }
+    
 }
 
 /*
@@ -41,8 +34,8 @@ void flag(int band, int filasZ, int columnasZ){
     //Se comprueba que exista la bandera
     if(band){
         //Si existe la bandera, se imprime por pantalla el valor de las filas y columnas de la imagen con zoom
-        printf("\nLas filas con zoom son: %d", filasZ);
-        printf("\nLas columnas con zoom son: %d\n", columnasZ);
+        printf("\nLas filas de la imagen con zoom son: %d", filasZ);
+        printf("\nLas columnas de la imagen con zoom son: %d\n", columnasZ);
     }
 
 }
@@ -77,7 +70,7 @@ void leerImagen(char* entrada, int filas, int columnas){
 }
     
 /*
-Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen x Columnas de la imagen
+Entradas: Nombre del archivo de salida x Matriz a escribir x Filas de la imagen con zoom x Columnas de la imagen con zoom
 Funcionamiento: Funcion que escribe un archivo en formato ".raw" con el contenido de una matriz
 Salida: No tiene
 */

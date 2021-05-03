@@ -4,7 +4,8 @@
 
 /*
 Entradas: Matriz de la imagen x Filas de la imagen x Columnas de la imagen x Factor de replicacion de la imagen
-Funcionamiento: Funcion que 
+Funcionamiento: Funcion que replica un pixel dependiendo del valor del factor de replicacion, y almacenando estos nuevos
+                elementos en una matriz nueva
 Salida: No tiene
 */
 void zoomInImagen(float** matriz, int filas, int columnas, int factorReplicacion){
@@ -37,9 +38,8 @@ void zoomInImagen(float** matriz, int filas, int columnas, int factorReplicacion
         aux1 += factorReplicacion;
     }
 
+    //Se libera la memoria de la matriz inicial
     liberarMemoriaMatriz(matrizImagen, filas);
-
-    //suavizarImagen(matrizZoomIn, filas*factorReplicacion, columnas*factorReplicacion);
 
 }
 
@@ -115,8 +115,6 @@ void suavizarImagen(float** matrizConZoom, int filasZ, int columnasZ){
 
         }
     }
-
-    liberarMemoriaMatriz(matrizZoomIn, filasZ);
 
 }
 

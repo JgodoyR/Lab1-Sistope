@@ -11,9 +11,9 @@
 #include <fcntl.h>                      
 
 //Variables globales
-float** matrizImagen;
-float** matrizZoomIn;
-float** matrizSuavizada;
+float** matrizImagen;                   //Variable que almacena los datos de la imagen de entrada
+float** matrizZoomIn;                   //Variable que almacena los datos de la imagen de entrada amplificada
+float** matrizSuavizada;                //Variable que almacena los datos de la imagen amplificada suavizada
 
 //Estructura datos de entrada
 struct datos{

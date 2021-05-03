@@ -9,7 +9,10 @@ Autor: Jordan Godoy
 //Funcion principal
 int main(int argc, char** argv){
 
+    //Variable para el switch-case
     int c;
+
+    char* extension;
 
     //Se le asigna memoria a las estructuras
     struct datos *dato = (struct datos*)calloc(1, sizeof(struct datos));
@@ -30,21 +33,41 @@ int main(int argc, char** argv){
             switch(c){
                 case 'I':
                     dato->imagenEntrada = optarg;
+                    //Se valida que la extension del archivo de entrada sea .raw
+                    extension = strrchr(dato->imagenEntrada , '.');
+                    if(strcmp(extension, ".raw") != 0){
+                        printf("\nEl archivo no posee la extension '.raw'.\n");
+                        exit(0);
+                    }
                     break;
                 case 'Z':
                     dato->imagenZoom = optarg;
+                    //Se valida que la opcion ingresada como nombre de la imagen de salida poseea la extension .raw
+                    extension = strrchr(dato->imagenZoom , '.');
+                    if(strcmp(extension, ".raw") != 0){
+                        printf("\nEl nombre de la imagen de salida debe poseer la extension '.raw' .\n");
+                        exit(0);
+                    }
                     break;
                 case 'S':
                     dato->imagenSuavizada = optarg;
+                    //Se valida que la opcion ingresada como nombre de la imagen de salida poseea la extension .raw
+                    extension = strrchr(dato->imagenSuavizada , '.');
+                    if(strcmp(extension, ".raw") != 0){
+                        printf("\nEl nombre de la imagen de salida  debe poseer la extension '.raw' .\n");
+                        exit(0);
+                    }
                     break;
                 case 'M':
                     dato->filasImagen = atoi(optarg);
+                    //Se comprueba que las filas sean un numero mayor a 0
                     if(dato->filasImagen <= 0){
                         printf("\nLa cantidad de filas de la imagen debe ser mayor a 0.\n");
                         exit(0);
                     }
                     break;
                 case 'N':
+                    //Se comprueba que las columnas sean un numero mayor a 0
                     dato->columnasImagen = atoi(optarg);
                     if(dato->columnasImagen <= 0){
                         printf("\nLa cantidad de columnas de la imagen debe ser mayor a 0.\n");
@@ -52,6 +75,7 @@ int main(int argc, char** argv){
                     }
                     break;
                 case 'r':
+                    //Se comprueba que el factor de replicacion sea un numero mayor a 0
                     dato->factor = atoi(optarg);
                     if(dato->factor <= 0){
                         printf("\nEl factor debe ser mayor a 0.\n");
@@ -78,6 +102,8 @@ int main(int argc, char** argv){
         }
     }
 
+    /*USO DE FUNCIONES*/
+
     //Se calcula las nuevas dimensiones de la imagen con zoom
     dz->filasZoom = dato->filasImagen * dato->factor;
 
@@ -100,6 +126,9 @@ int main(int argc, char** argv){
 
     //Se escriben la imagen con zoom
     escribirResultados(dato->imagenSuavizada, matrizSuavizada, dz->filasZoom, dz->columnasZoom);
+
+    //Se libera la memoria de la matriz con zoom
+    liberarMemoriaMatriz(matrizZoomIn, dz->filasZoom);
 
     //Se libera la memoria de la matriz suavizada
     liberarMemoriaMatriz(matrizSuavizada, dz->filasZoom);
